@@ -20,7 +20,7 @@ raw_item_json = []
 #each item run for loop
 for item in items:
     item_contents = item.contents 
-    item_map = {} 
+    item_map = {}
     item_name = item_contents[1].get_text()
     item_map['name'] = item_name
     if item_contents[1].has_attr('href'):
