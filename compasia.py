@@ -19,8 +19,8 @@ raw_item_json = []
 
 #each item run for loop
 for item in items:
-    item_contents = item.contents 
-    item_map = {}
+    item_contents = item.contents  #在contents 里面有我们要的东西
+    item_map = {} #{} means dictionary aka empty json , 全部东西放进里面，然后写进json file，最后write
     item_name = item_contents[1].get_text()
     item_map['name'] = item_name
     if item_contents[1].has_attr('href'):
@@ -29,8 +29,28 @@ for item in items:
     
     raw_item_price = item_contents[3].get_text()
 
+    #check if raw_item_price string contain "RM"
+    #if not, skip the item
+    if "RM" not in raw_item_price:
+        raw_item_price = item_contents[2].get_text()
+
+    if "RM" not in raw_item_price:
+        continue
+
+    # RM 2,000\n to RM 2,000
+    item_price = raw_item_price.split('\n')[0].replace(
+            'From RM ', '').replace(',', '').replace('RM', '')
+
+    #if item_price length is not empty
+    if len (item_price) > 0:
+        #convert to float
+        item_map['price'] = float(item_price)
+    else:
+        #skip if price is empty
+        continue
+
     item_map['website_name'] = website_name
-    item_map['price'] = raw_item_price
+    ###item_map['price'] = raw_item_price
     
     # put all the json data into raw_item_json
     raw_item_json.append(item_map)
