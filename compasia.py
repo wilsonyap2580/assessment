@@ -1,7 +1,6 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-import urllib
 
 #variables
 website_name ='compasia'
